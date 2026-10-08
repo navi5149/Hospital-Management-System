@@ -1,0 +1,701 @@
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+* {
+	box-sizing: border-box;
+}
+
+/* =========================================================
+   TOP NAVBAR
+========================================================= */
+.navbar {
+	height: 76px;
+	width: 100%;
+	background: #ffffff;
+	display: flex;
+	align-items: center;
+	padding: 0 24px;
+	border-bottom: 1px solid #eee8f8;
+	position: relative;
+	z-index: 1000;
+}
+
+/* Hamburger */
+.menu-button {
+	width: 42px;
+	height: 42px;
+	border: none;
+	border-radius: 10px;
+	background: #f0ebff;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+	transition: 0.25s;
+}
+
+.menu-button:hover {
+	background: #e4d9ff;
+}
+
+.menu-button span {
+	width: 19px;
+	height: 2px;
+	background: #673ab7;
+	border-radius: 5px;
+}
+
+/* Hospital name */
+.nav-logo {
+	margin-left: 16px;
+	font-size: 22px;
+	font-weight: 700;
+	color: #34205f;
+	white-space: nowrap;
+}
+
+.nav-logo span {
+	color: #7657d9;
+}
+
+/* Navbar links */
+.nav-links {
+	margin-left: auto;
+	display: flex;
+	align-items: center;
+	gap: 30px;
+}
+
+.nav-links a {
+	position: relative;
+	text-decoration: none;
+	color: #34205f;
+	font-size: 14px;
+	padding: 29px 0;
+	transition: 0.25s;
+}
+
+/* Purple hover line */
+.nav-links a::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 17px;
+	width: 0;
+	height: 3px;
+	background: #673ab7;
+	border-radius: 5px;
+	transition: width 0.25s ease;
+}
+
+.nav-links a:hover {
+	color: #673ab7;
+}
+
+.nav-links a:hover::after {
+	width: 100%;
+}
+
+/* Contact */
+.nav-contact {
+	margin-left: 25px;
+	padding-left: 22px;
+	border-left: 1px solid #e7e1f2;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.nav-contact span {
+	font-size: 10px;
+	color: #777080;
+}
+
+.nav-contact strong {
+	font-size: 11px;
+	color: #5f3bb7;
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+.menu-overlay {
+	position: fixed;
+	top: 76px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(45, 30, 70, 0.30);
+	backdrop-filter: blur(2px);
+	opacity: 0;
+	visibility: hidden;
+	transition: 0.3s;
+	z-index: 1998;
+}
+
+.menu-overlay.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* =========================================================
+   SIDE MENU
+========================================================= */
+.side-menu {
+	position: fixed;
+	top: 76px;
+	left: -285px;
+	width: 265px;
+	height: calc(100vh - 76px);
+	background: #ffffff;
+	border-right: 1px solid #eee7fa;
+	border-radius: 0 15px 15px 0;
+	box-shadow: 8px 0 30px rgba(65, 35, 120, 0.16);
+	z-index: 1999;
+	transition: left 0.32s ease;
+	display: flex;
+	flex-direction: column;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.side-menu.active {
+	left: 0;
+}
+
+/* =========================================================
+   SIDEBAR HEADER / LOGO
+========================================================= */
+.side-logo {
+	padding: 18px 18px 15px;
+	display: flex;
+	align-items: center;
+	gap: 11px;
+	border-bottom: 1px solid #eee8f8;
+}
+
+/* Medical logo */
+.medical-logo {
+	width: 42px;
+	height: 42px;
+	border-radius: 11px;
+	background: linear-gradient(135deg, #7657d9, #9878e8);
+	position: relative;
+	flex-shrink: 0;
+	box-shadow: 0 5px 12px rgba(118, 87, 217, 0.25);
+}
+
+/* Heart shape */
+.medical-logo::before {
+	content: "";
+	position: absolute;
+	width: 20px;
+	height: 17px;
+	border: 2px solid white;
+	border-radius: 50% 50% 45% 45%;
+	left: 9px;
+	top: 10px;
+	transform: rotate(-45deg);
+}
+
+/* Cross inside logo */
+.medical-logo::after {
+	content: "+";
+	position: absolute;
+	left: 15px;
+	top: 8px;
+	color: white;
+	font-size: 15px;
+	font-weight: 700;
+	transform: rotate(0deg);
+}
+
+/* Logo text */
+.side-logo-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.side-logo-text strong {
+	font-size: 14px;
+	color: #34205f;
+	line-height: 1.2;
+}
+
+.side-logo-text span {
+	font-size: 8px;
+	color: #7657d9;
+	font-weight: 600;
+	letter-spacing: 0.7px;
+	margin-top: 3px;
+}
+
+/* Close button */
+.side-close {
+	margin-left: auto;
+	width: 25px;
+	height: 25px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #9b91aa;
+	font-size: 17px;
+	cursor: pointer;
+	transition: 0.2s;
+}
+
+.side-close:hover {
+	background: #f1edff;
+	color: #7657d9;
+}
+
+/* =========================================================
+   MENU TITLE
+========================================================= */
+.menu-title {
+	padding: 15px 20px 7px;
+	font-size: 9px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	color: #a59bb2;
+}
+
+/* =========================================================
+   MENU LINKS
+========================================================= */
+.side-menu-links {
+	padding: 0 12px;
+}
+
+/* Individual link */
+.side-menu a {
+	height: 40px;
+	margin: 4px 0;
+	padding: 0 11px;
+	display: flex;
+	align-items: center;
+	border-radius: 9px;
+	text-decoration: none;
+	color: #514a5e;
+	font-size: 11px;
+	transition: all 0.22s ease;
+}
+
+/* Icon box */
+.menu-icon {
+	width: 27px;
+	height: 27px;
+	margin-right: 11px;
+	border-radius: 7px;
+	background: #f0ebff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #6840c5;
+	font-size: 10px;
+	font-weight: 700;
+	transition: 0.22s;
+}
+
+/* Arrow made using CSS
+   so no encoding problem */
+.menu-arrow {
+	margin-left: auto;
+	width: 7px;
+	height: 7px;
+	border-top: 1.5px solid #b5a9c9;
+	border-right: 1.5px solid #b5a9c9;
+	transform: rotate(45deg);
+	transition: 0.22s;
+}
+
+/* Hover */
+.side-menu a:hover {
+	background: #f2edff;
+	color: #5d38b6;
+}
+
+.side-menu a:hover .menu-icon {
+	background: #7657d9;
+	color: white;
+}
+
+.side-menu a:hover .menu-arrow {
+	border-color: #7657d9;
+	transform: rotate(45deg) translate(2px, -2px);
+}
+
+/* Active Home */
+.side-menu a.active {
+	background: #eee7ff;
+	color: #5f39b9;
+	font-weight: 600;
+}
+
+.side-menu a.active .menu-icon {
+	background: #7657d9;
+	color: white;
+}
+
+/* =========================================================
+   HELP CARD
+========================================================= */
+.sidebar-help {
+	margin: auto 12px 14px;
+	padding: 13px;
+	border-radius: 13px;
+	background: linear-gradient(135deg, #f3eeff, #faf8ff);
+	border: 1px solid #ebe3fa;
+}
+
+/* Help icon */
+.help-icon {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	background: #7657d9;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 13px;
+	margin-bottom: 8px;
+}
+
+.sidebar-help h4 {
+	margin: 0 0 4px;
+	font-size: 11px;
+	color: #4b2d8c;
+}
+
+.sidebar-help p {
+	margin: 0 0 9px;
+	font-size: 8px;
+	line-height: 1.5;
+	color: #81788e;
+}
+
+.contact-btn {
+	display: inline-block;
+	text-decoration: none;
+	background: #7657d9;
+	color: white;
+	font-size: 8px;
+	padding: 6px 12px;
+	border-radius: 6px;
+	transition: 0.25s;
+}
+
+.contact-btn:hover {
+	background: #5c3db0;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+.side-menu::-webkit-scrollbar {
+	width: 4px;
+}
+
+.side-menu::-webkit-scrollbar-track {
+	background: #faf9fd;
+}
+
+.side-menu::-webkit-scrollbar-thumb {
+	background: #c9bee0;
+	border-radius: 10px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+@media ( max-width : 900px) {
+	.nav-contact {
+		display: none;
+	}
+	.nav-links {
+		gap: 18px;
+	}
+}
+
+@media ( max-width : 650px) {
+	.navbar {
+		height: 65px;
+		padding: 0 14px;
+	}
+	.nav-logo {
+		font-size: 17px;
+		margin-left: 10px;
+	}
+	.nav-links {
+		display: none;
+	}
+	.menu-overlay {
+		top: 65px;
+	}
+	.side-menu {
+		top: 65px;
+		height: calc(100vh - 65px);
+		width: 250px;
+		left: -270px;
+	}
+}
+</style>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+
+	<!-- HAMBURGER -->
+
+	<button class="menu-button" onclick="toggleMenu()">
+
+		<span></span> <span></span> <span></span>
+
+	</button>
+
+
+	<!-- HOSPITAL NAME -->
+
+	<div class="nav-logo">
+
+		Pranavi <span>Health Care</span>
+
+	</div>
+
+
+	<!-- NAVIGATION -->
+
+	<div class="nav-links">
+
+		<a href="${pageContext.request.contextPath}/dashboard"> Dashboard
+		</a> <a href="${pageContext.request.contextPath}/patients"> Patients </a>
+
+		<a href="${pageContext.request.contextPath}/doctors"> Doctors </a> <a
+			href="${pageContext.request.contextPath}/about.jsp"> About </a>
+
+	</div>
+
+
+	<!-- CONTACT -->
+
+	<div class="nav-contact">
+
+		<span>24/7 Support</span> <strong>+91 98765 43210</strong>
+
+	</div>
+
+</nav>
+
+
+<!-- =====================================================
+     OVERLAY
+===================================================== -->
+
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()">
+</div>
+
+
+<!-- =====================================================
+     SIDE MENU
+===================================================== -->
+
+<aside class="side-menu" id="sideMenu">
+
+
+	<!-- SIDEBAR LOGO -->
+
+	<div class="side-logo">
+
+
+		<div class="medical-logo"></div>
+
+
+		<div class="side-logo-text">
+
+			<strong>Pranavi</strong> <span>HEALTH CARE</span>
+
+		</div>
+
+
+		<div class="side-close" onclick="toggleMenu()">x</div>
+
+	</div>
+
+
+	<!-- TITLE -->
+
+	<div class="menu-title">Main Menu</div>
+
+
+	<!-- LINKS -->
+
+	<div class="side-menu-links">
+
+
+		<!-- HOME -->
+
+		<a href="${pageContext.request.contextPath}/dashboard" class="active">
+
+			<div class="menu-icon">H</div> <span> Home </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- DEPARTMENTS -->
+
+		<a href="${pageContext.request.contextPath}/departments">
+
+			<div class="menu-icon">D</div> <span> Departments </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- APPOINTMENTS -->
+
+		<a href="${pageContext.request.contextPath}/appointments">
+
+			<div class="menu-icon">A</div> <span> Appointments </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- ADMISSIONS -->
+
+		<a href="${pageContext.request.contextPath}/admissions">
+
+			<div class="menu-icon">AD</div> <span> Admissions </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- BEDS -->
+
+		<a href="${pageContext.request.contextPath}/beds">
+
+			<div class="menu-icon">B</div> <span> Beds </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- PRESCRIPTIONS -->
+
+		<a href="${pageContext.request.contextPath}/prescriptions">
+
+			<div class="menu-icon">P</div> <span> Prescriptions </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- PRESCRIPTION MEDICINES -->
+
+		<a href="${pageContext.request.contextPath}/prescription-medicines">
+
+			<div class="menu-icon">M</div> <span> Prescription Medicines </span>
+
+			<span class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- LAB TESTS -->
+
+		<a href="${pageContext.request.contextPath}/lab-tests">
+
+			<div class="menu-icon">L</div> <span> Lab Tests </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- TEST ORDERS -->
+
+		<a href="${pageContext.request.contextPath}/test-orders">
+
+			<div class="menu-icon">T</div> <span> Test Orders </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- BILLS -->
+
+		<a href="${pageContext.request.contextPath}/bill-list">
+
+			<div class="menu-icon">BL</div> <span> Bills </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+		<!-- PAYMENTS -->
+
+		<a href="${pageContext.request.contextPath}/payments">
+
+			<div class="menu-icon">PY</div> <span> Payments </span> <span
+			class="menu-arrow"></span>
+
+		</a>
+
+
+	</div>
+
+
+	<!-- =================================================
+         HELP
+    ================================================= -->
+
+	<div class="sidebar-help">
+
+
+		<div class="help-icon">?</div>
+
+
+		<h4>Need Help?</h4>
+
+
+		<p>Our support team is here for you 24/7.</p>
+
+
+		<a href="tel:+919876543210" class="contact-btn"> Contact Us </a>
+
+
+	</div>
+
+
+</aside>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+	function toggleMenu() {
+
+		var menu = document.getElementById("sideMenu");
+
+		var overlay = document.getElementById("menuOverlay");
+
+		menu.classList.toggle("active");
+
+		overlay.classList.toggle("active");
+
+	}
+</script>
